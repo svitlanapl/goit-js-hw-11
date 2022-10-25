@@ -71,18 +71,16 @@ async function onSearchForm(evt) {
 
   const query = evt.target.elements.searchQuery.value.trim();
 
-  const response = await searchQuery.searchPictures(query);
-  console.log(response);
-  const galleryItem = response.hits;
-
   try {
+    const response = await searchQuery.searchPictures(query);
+    console.log(response);
+    const galleryItem = response.hits;
+
     refs.galleryEl.innerHTML = '';
     if (galleryItem.length === 0) {
       Notiflix.Notify.info(MESSAGE_ERROR);
     } else if (!query) {
       Notiflix.Notify.info(MESSAGE);
-
-      return;
     } else {
       Notiflix.Notify.success(`Hooray! We found ${response.totalHits} images.`);
       renderingMarkup(response.hits);
